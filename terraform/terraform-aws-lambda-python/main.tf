@@ -87,6 +87,11 @@ resource "aws_lambda_function" "lambda" {
   }
   memory_size      = 10240
   timeout          = 900
+  environment {
+    variables = {
+      REPLICATION_TASK_ARN = "arn:aws:dms:us-west-2:453874272819:task:I2H3DNTUNKOZ5KZGSND7R5UXRPVEPVSJOV657WA"
+    }
+  }
 }
 
 # IAM
