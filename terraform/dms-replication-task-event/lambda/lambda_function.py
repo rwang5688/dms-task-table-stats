@@ -91,9 +91,9 @@ def lambda_handler(event, context):
         print("==")
     
         # set dest_object_prefix and dest_object_name
-        task_id = config.replication_task_arn.split(":")[-1]
+        task_id = config.replication_task_id
         today = date.today()
-        dest_object_prefix = "task="+task_id+"/"+"date="+str(today)+"/"
+        dest_object_prefix = "task_id="+task_id+"/"+"date="+str(today)+"/"
         dest_object_name = "table_stats.csv"
         
         print("dms-replication-task-event: Writing and uploading table stats as:")
