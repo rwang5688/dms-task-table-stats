@@ -51,9 +51,13 @@ def get_event_vars(event):
     print("[DEBUG] get_event_vars: DMS event = %s" % dms_event)
     config.replication_task_id = dms_event['SourceId']
     
+    # initialize DMS replication task ARN
+    config.replication_task_arn = ""
+    
     # DEBUG
     print("get_event_vars:")
     print("replication_task_id: %s" % (config.replication_task_id))
+    print("replication_task_arn: %s" % (config.replication_task_arn))
     
     return True
     
