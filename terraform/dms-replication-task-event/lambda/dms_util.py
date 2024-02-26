@@ -17,7 +17,7 @@ def get_dms_client():
     return dms
 
 
-def get_task_status(replication_task_arn):
+def get_task_status(replication_task_id):
     task_status = ""
 
     dms = get_dms_client()
@@ -28,9 +28,9 @@ def get_task_status(replication_task_arn):
     try:
         filters = []
         filter = {}
-        filter['Name'] = 'replication-task-arn'
+        filter['Name'] = 'replication-task-id'
         filter['Values'] = []
-        filter['Values'].append(replication_task_arn)
+        filter['Values'].append(replication_task_id)
         filters.append(filter)
         print("get_task_status: Invoke describe_replication_tasks with filters = %s." % (filters))
 
@@ -39,8 +39,11 @@ def get_task_status(replication_task_arn):
 
         replication_tasks = response['ReplicationTasks']
         for task in replication_tasks:
-            task_arn = task['ReplicationTaskArn']
-            if task_arn == replication_task_arn:
+            task_id = task['ReplicationTaskIdentifier']
+            # make sure we have the correct task
+            if task_id == replication_task_id:
+                config.replication_task_arn = task['ReplicationTaskArn']
+                print("[DEBUG] get_task_status: config.replication_task_arn = %s." % (config.replication_task_arn))
                 task_status = task['Status']
                 print("[DEBUG] get_task_status: task_status = %s." % (task_status))
 

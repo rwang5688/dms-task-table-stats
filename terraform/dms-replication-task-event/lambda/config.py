@@ -2,7 +2,8 @@
 profile_name = ""
 region_name = ""
 
-# DMS replication task ARN
+# DMS replication task name and ARN
+replication_task_id = ""
 replication_task_arn = ""
 
 # destination bucket name

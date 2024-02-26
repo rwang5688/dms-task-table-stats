@@ -89,8 +89,8 @@ resource "aws_lambda_function" "lambda" {
   timeout          = 900
   environment {
     variables = {
-      REPLICATION_TASK_ARN = "arn:aws:dms:us-west-2:453874272819:task:I2H3DNTUNKOZ5KZGSND7R5UXRPVEPVSJOV657WA"
-      DEST_BUCKET_NAME = "table-stats-453874272819-us-west-2"
+      DEST_BUCKET_NAME = "dms-table-stats-453874272819-us-west-2"
+      REGION_NAME = "${var.aws_region}"
     }
   }
 }
