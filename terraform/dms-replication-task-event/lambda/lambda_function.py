@@ -14,27 +14,6 @@ LOGGER = logging.getLogger(__name__)
 logging.getLogger().setLevel(logging.INFO)
 
 
-def get_event_vars(event):
-    # AWS parameters
-    #config.profile_name = ""
-    #config.profile_name = event['profile_name']
-    config.region_name = ""
-    config.region_name = event['region']
-    
-    # DMS replication task ARN
-    config.replication_task_arn = ""
-    resources = event['resources']
-    for resource in resources:
-        if "arn:aws:dms" in resource and "task" in resource:
-            config.replication_task_arn = resource
-    
-    # DEBUG
-    print("get_event_vars:")
-    print("profile_name: %s" % (config.profile_name))
-    print("region_name: %s" % (config.region_name))
-    print("replication_task_arn: %s" % (config.replication_task_arn))
-    
-    
 def get_env_var(env_var_name):
     env_var = ""
     if env_var_name in os.environ:
@@ -45,42 +24,57 @@ def get_env_var(env_var_name):
 
 
 def get_env_vars():
-    if config.replication_task_arn == "":
-        # WORKAROUND: get_event_vars() has failed to set config.replication_task_arn
-        print("[WORKAROUND] get_env_vars: retrieving REPLICATION_TASK_ARN.")
-        config.replication_task_arn = get_env_var("REPLICATION_TASK_ARN")
-        if config.replication_task_arn == "":
-            print("get_env_vars: failed to retrieve REPLICATION_TASK_ARN.")
-            return False
-    
     config.dest_bucket_name = get_env_var("DEST_BUCKET_NAME")
     if config.dest_bucket_name == "":
         print("get_env_vars: failed to retrieve DEST_BUCKET_NAME.")
         return False
         
+    config.region_name = get_env_var("REGION_NAME")
+    if config.region_name == "":
+        print("get_env_vars: failed to retrieve REGION_NAME.")
+        return False
+        
     # DEBUG
     print("get_env_vars:")
-    print("replication_task_arn: %s" % (config.replication_task_arn))
     print("dest_bucket_name: %s" % (config.dest_bucket_name))
+    print("region_name: %s" % (config.region_name))
+    
+    return True
+
+
+def get_event_vars(event):
+    # DMS erplication task id
+    config.replication_task_id = ""
+    dms_event_str = event['Records'][0]['Sns']['Message']
+    print("[DEBUG] get_event_vars: DMS event string = %s" % dms_event_str)
+    dms_event = json.loads(dms_event_str)
+    print("[DEBUG] get_event_vars: DMS event = %s" % dms_event)
+    config.replication_task_id = dms_event['SourceId']
+    
+    # DEBUG
+    print("get_event_vars:")
+    print("replication_task_id: %s" % (config.replication_task_id))
     
     return True
     
-
+    
 def lambda_handler(event, context):
     # start
     print('\nStarting lambda_function.lambda_handler ...')
     LOGGER.info("%s", pformat({"Context" : context, "Request": event}))
-
-    # get event variables
-    get_event_vars(event)
     
     # get environment variables
     if get_env_vars() == False:
         print("dms-replication-task-event: get_env_vars() failed.")
         return False
         
+    # get event variables
+    if get_event_vars(event) == False:
+        print("dms-replication-task-event: get_event_vars() failed.")
+        return False
+        
     # check if replication task status is now stopped
-    task_status = dms_util.get_task_status(config.replication_task_arn)
+    task_status = dms_util.get_task_status(config.replication_task_id)
     if task_status == 'stopped':
         # get table stats
         print("dms-replication-task-event: Task %s is stopped. Getting table stats ..." % (config.replication_task_arn))
