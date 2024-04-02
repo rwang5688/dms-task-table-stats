@@ -1,5 +1,6 @@
 import argparse
 from datetime import date
+from datetime import datetime
 import json
 import logging
 import os
@@ -61,7 +62,14 @@ def get_event_vars(event):
     
     return True
     
-    
+
+def prepend_column(column_header, column_value, data):
+    for i, d in enumerate(data):
+        data[i] = {column_header: column_value, **d}
+        
+    return data
+
+
 def lambda_handler(event, context):
     # start
     print('\nStarting lambda_function.lambda_handler ...')
@@ -85,16 +93,27 @@ def lambda_handler(event, context):
         table_stats = dms_util.get_table_stats(config.replication_task_arn)
         print("dms-replication-task-event: Printing table stats for task %s ..." % (config.replication_task_arn))
         print("==")
-        print("DEBUG")
+        print("table_stats")
         print("==")
         print(table_stats)
         print("==")
     
-        # set dest_object_prefix and dest_object_name
+        # prepend task_id to table_stats table
         task_id = config.replication_task_id
+        table_stats_ext = prepend_column("TaskId", task_id, table_stats)
+        print("==")
+        print("table_stats_ext")
+        print("==")
+        print(table_stats_ext)
+        print("==")
+        
+        # set dest_object_prefix and dest_object_name
         today = date.today()
-        dest_object_prefix = "task_id="+task_id+"/"+"date="+str(today)+"/"
-        dest_object_name = "table_stats.csv"
+        dest_object_prefix = "date="+str(today)+"/"
+        
+        now = datetime.now()
+        timestamp = now.strftime("%Y-%m-%d-%H-%M-%S")
+        dest_object_name = "table-stats-"+timestamp+".csv"
         
         print("dms-replication-task-event: Writing and uploading table stats as:")
         print("dest_bucket_name: %s" % (config.dest_bucket_name))
