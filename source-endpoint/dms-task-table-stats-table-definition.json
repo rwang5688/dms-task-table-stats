@@ -1,0 +1,110 @@
+{
+    "TableCount": "1",
+    "Tables": [
+        {
+            "TableName": "dms_task_table_stats",
+            "TablePath": "db/dms_task_table_stats/",
+            "TableOwner": "db",
+            "TableColumns": [
+                {
+                    "ColumnName": "TaskId",
+                    "ColumnType": "STRING",
+                    "ColumnLength": "128"
+                },
+                {
+                    "ColumnName": "SchemaName",
+                    "ColumnType": "STRING",
+                    "ColumnLength": "128"
+                },
+                {
+                    "ColumnName": "TableName",
+                    "ColumnType": "STRING",
+                    "ColumnLength": "128"
+                },
+                {
+                    "ColumnName": "Inserts",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "Deletes",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "Updates",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "Ddls",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "AppliedInserts",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "AppliedDeletes",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "AppliedUpdates",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "AppliedDdls",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "FullLoadRows",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "FullLoadCondtnlChkFailedRows",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "FullLoadErrorRows",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "FullLoadStartTime",
+                    "ColumnType": "DATETIME"
+                },
+                {
+                    "ColumnName": "FullLoadEndTime",
+                    "ColumnType": "DATETIME"
+                },
+                {
+                    "ColumnName": "FullLoadReloaded",
+                    "ColumnType": "BOOLEAN"
+                },
+                {
+                    "ColumnName": "LastUpdateTime",
+                    "ColumnType": "DATETIME"
+                },
+                {
+                    "ColumnName": "TableState",
+                    "ColumnType": "STRING",
+                    "ColumnLength": "30"
+                },
+                {
+                    "ColumnName": "ValidationPendingRecords",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "ValidationFailedRecords",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "ValidationSuspendedRecords",
+                    "ColumnType": "INT8"
+                },
+                {
+                    "ColumnName": "ValidationState",
+                    "ColumnType": "STRING",
+                    "ColumnLength": "30"
+                }
+            ],
+            "TableColumnsTotal": "23"
+        }
+    ]
+}
