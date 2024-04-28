@@ -1,19 +1,22 @@
 {
-  "account": "453874272819",
-  "detail": {
-    "category": "StateChange",
-    "detailMessage": "Replication task started, with flag, 'fresh start'",
-    "eventId": "DMS-EVENT-0069",
-    "eventType": "REPLICATION_TASK_STARTED",
-    "type": "REPLICATION_TASK"
-  },
-  "detail-type": "DMS Replication Task State Change",
-  "id": "6b201764-d86c-084f-53d8-461599593387",
-  "region": "us-west-2",
-  "resources": [
-    "arn:aws:dms:us-west-2:453874272819:task:47WJTXHP2LZETFQC6JJWB5AX2IND6TO4HVUI6CI"
-  ],
-  "source": "aws.dms",
-  "time": "2024-01-22T05:53:32Z",
-  "version": "0"
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventSubscriptionArn": "arn:aws:sns:us-west-2:453874272819:dms-task-table-stats-topic:44c1419c-b4ba-4f62-bfa6-2f60f537f999",
+            "EventVersion": "1.0",
+            "Sns": {
+                "Message": "{\"EventSource\":\"replication-task\",\"EventTime\":\"2024-04-2805:24:22.75\",\"IdentifierLink\":\"https://console.aws.amazon.com/dms/v2/home?region=us-west-2#taskDetails/dataedu-dms-task\",\"SourceId\":\"dataedu-dms-task\",\"EventID\":\"http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html#DMS-EVENT-0079\",\"EventMessage\":\"Replicationtaskhasstopped.StopReasonFULL_LOAD_ONLY_FINISHED.\"}",
+                "MessageAttributes": {},
+                "MessageId": "f368d1a3-1a08-5669-831d-8f04c5daca47",
+                "Signature": "L3KOdQb40agNiH6uym/aEj6roXWFB98GjqM2YVwIDFnKjGW3MJHCRkG2StJX1ZaUXy46cd+CcOONXJKn4uLEvv5rdr/1xJcHDCWTAhzRbBaCLFSvJNoXb3boDbqQvXdibCxH9VjkwtCQcXH5cfuM/bErQWynWr4kfK6gmFk1TqYRShcDmVIEMB+LKZ5a56SQR/wZfbNLNyRtZlTUOAEe5bS2SzcWck/LnDWzPM6NR65CDQ3eL4a5KNq38A7iIg/NSf0PaIe/r7s+VAarkYYQIKbLQ5406pZIDB8sLm2mGYoRjMK9hUt4XRo0lb5+r+d3bMftiUre3TTpWwl7q+lZHA==",
+                "SignatureVersion": "1",
+                "SigningCertUrl": "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem",
+                "Subject": "DMS Notification Message",
+                "Timestamp": "2024-04-28T05:24:34.945Z",
+                "TopicArn": "arn:aws:sns:us-west-2:453874272819:dms-task-table-stats-topic",
+                "Type": "Notification",
+                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:453874272819:dms-task-table-stats-topic:44c1419c-b4ba-4f62-bfa6-2f60f537f999"
+            }
+        }
+    ]
 }
