@@ -113,7 +113,7 @@ def lambda_handler(event, context):
         # set dest_object_prefix and dest_object_name
         #today = date.today()
         #dest_object_prefix = "date="+str(today)+"/"
-        dest_object_prefix = "db/dms_task_table_stats/"
+        dest_object_prefix = "db/dms_task_table_stats/cdc/"
         
         now = datetime.now()
         timestamp = now.strftime("%Y%m%d-%H%M%S")
