@@ -101,6 +101,9 @@ def lambda_handler(event, context):
         # prepend task_id to table_stats table
         task_id = config.replication_task_id
         table_stats_ext = prepend_column("TaskId", task_id, table_stats)
+        table_stats_ext = prepend_column("TableOwner", "db", table_stats_ext)
+        table_stats_ext = prepend_column("Table", "dms_task_table_stats", table_stats_ext)
+        table_stats_ext = prepend_column("Operation", "INSERT", table_stats_ext)
         print("==")
         print("table_stats_ext")
         print("==")
@@ -108,12 +111,13 @@ def lambda_handler(event, context):
         print("==")
         
         # set dest_object_prefix and dest_object_name
-        today = date.today()
-        dest_object_prefix = "date="+str(today)+"/"
+        #today = date.today()
+        #dest_object_prefix = "date="+str(today)+"/"
+        dest_object_prefix = "db/dms_task_table_stats/"
         
         now = datetime.now()
-        timestamp = now.strftime("%Y-%m-%d-%H-%M-%S")
-        dest_object_name = "table-stats-"+timestamp+".csv"
+        timestamp = now.strftime("%Y%m%d-%H%M%S")
+        dest_object_name = "CDC-"+timestamp+".csv"
         
         print("dms-replication-task-event: Writing and uploading table stats as:")
         print("dest_bucket_name: %s" % (config.dest_bucket_name))

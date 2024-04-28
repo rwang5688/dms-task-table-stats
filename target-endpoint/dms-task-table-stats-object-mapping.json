@@ -1,0 +1,168 @@
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "1",
+            "object-locator": {
+                "schema-name": "db",
+                "table-name": "%"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "object-mapping",
+            "rule-id": "2",
+            "rule-name": "TransformToDDB",
+            "rule-action": "map-record-to-record",
+            "object-locator": {
+                "schema-name": "db",
+                "table-name": "dms_task_table_stats"
+            },
+            "target-table-name": "dms_task_table_stats_t",
+            "mapping-parameters": {
+                "partition-key-name": "TaskId",
+                "attribute-mappings": [
+                    {
+                        "target-attribute-name": "TaskId",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${TaskId}"
+                    },
+                    {
+                        "target-attribute-name": "SchemaName",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${SchemaName}"
+                    },
+                    {
+                        "target-attribute-name": "TableName",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${TableName}"
+                    },
+                    {
+                        "target-attribute-name": "Inserts",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${Inserts}"
+                    },
+                    {
+                        "target-attribute-name": "Deletes",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${Deletes}"
+                    },
+                    {
+                        "target-attribute-name": "Updates",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${Updates}"
+                    },
+                    {
+                        "target-attribute-name": "Ddls",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${Ddls}"
+                    },
+                    {
+                        "target-attribute-name": "AppliedInserts",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${AppliedInserts}"
+                    },
+                    {
+                        "target-attribute-name": "AppliedDeletes",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${AppliedDeletes}"
+                    },
+                    {
+                        "target-attribute-name": "AppliedUpdates",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${AppliedUpdates}"
+                    },
+                    {
+                        "target-attribute-name": "AppliedDdls",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${AppliedDdls}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadRows",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${FullLoadRows}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadCondtnlChkFailedRows",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${FullLoadCondtnlChkFailedRows}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadErrorRows",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${FullLoadErrorRows}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadStartTime",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${FullLoadStartTime}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadEndTime",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${FullLoadEndTime}"
+                    },
+                    {
+                        "target-attribute-name": "FullLoadReloaded",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "boolean",
+                        "value": "${FullLoadReloaded}"
+                    },
+                    {
+                        "target-attribute-name": "LastUpdateTime",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${LastUpdateTime}"
+                    },
+                    {
+                        "target-attribute-name": "TableState",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${TableState}"
+                    },
+                    {
+                        "target-attribute-name": "ValidationPendingRecords",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${ValidationPendingRecords}"
+                    },
+                    {
+                        "target-attribute-name": "ValidationFailedRecords",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${ValidationFailedRecords}"
+                    },
+                    {
+                        "target-attribute-name": "ValidationSuspendedRecords",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "number",
+                        "value": "${ValidationSuspendedRecords}"
+                    },
+                    {
+                        "target-attribute-name": "ValidationState",
+                        "attribute-type": "scalar",
+                        "attribute-sub-type": "string",
+                        "value": "${ValidationState}"
+                    }
+                ]
+            }
+        }
+    ]
+}
