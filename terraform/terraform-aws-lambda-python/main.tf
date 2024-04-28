@@ -80,7 +80,7 @@ resource "aws_lambda_function" "lambda" {
   function_name    = "${var.lambda_name}"
   role             = "${aws_iam_role.lambda_iam.arn}"
   handler          = "lambda_function.lambda_handler"
-  runtime          = "python3.9"
+  runtime          = "python3.12"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
   ephemeral_storage {
     size           = 10240
@@ -89,7 +89,7 @@ resource "aws_lambda_function" "lambda" {
   timeout          = 900
   environment {
     variables = {
-      DEST_BUCKET_NAME = "dms-table-stats-453874272819-us-west-2"
+      DEST_BUCKET_NAME = "dms-task-table-stats-453874272819-us-west-2"
       REGION_NAME = "${var.aws_region}"
     }
   }
