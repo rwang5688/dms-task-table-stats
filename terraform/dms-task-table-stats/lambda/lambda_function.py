@@ -101,9 +101,9 @@ def lambda_handler(event, context):
         # prepend task_id to table_stats table
         task_id = config.replication_task_id
         table_stats_ext = prepend_column("TaskId", task_id, table_stats)
-        table_stats_ext = prepend_column("TableOwner", "db", table_stats_ext)
-        table_stats_ext = prepend_column("Table", "dms_task_table_stats", table_stats_ext)
-        table_stats_ext = prepend_column("Operation", "INSERT", table_stats_ext)
+        #table_stats_ext = prepend_column("TableOwner", "db", table_stats_ext)
+        #table_stats_ext = prepend_column("Table", "dms_task_table_stats", table_stats_ext)
+        #table_stats_ext = prepend_column("Operation", "INSERT", table_stats_ext)
         print("==")
         print("table_stats_ext")
         print("==")
@@ -113,11 +113,12 @@ def lambda_handler(event, context):
         # set dest_object_prefix and dest_object_name
         #today = date.today()
         #dest_object_prefix = "date="+str(today)+"/"
-        dest_object_prefix = "db/dms_task_table_stats/cdc/"
+        #dest_object_prefix = "db/dms_task_table_stats/cdc/"
+        dest_object_prefix = "db/dms_task_table_stats/"
         
         now = datetime.now()
         timestamp = now.strftime("%Y%m%d-%H%M%S")
-        dest_object_name = "CDC-"+timestamp+".csv"
+        dest_object_name = timestamp+".csv"
         
         print("dms-replication-task-event: Writing and uploading table stats as:")
         print("dest_bucket_name: %s" % (config.dest_bucket_name))
@@ -125,7 +126,7 @@ def lambda_handler(event, context):
         print("dest_object_name: %s" % (dest_object_name))
         
         # write csv file
-        csv_util.write_csv_file(table_stats, dest_object_name)
+        csv_util.write_csv_file(table_stats, dest_object_name, write_header=False)
         
         # upload csv file to dest bucket
         csv_util.put_csv_file_as_s3_object(config.dest_bucket_name, dest_object_prefix, dest_object_name)
