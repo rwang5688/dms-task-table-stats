@@ -46,11 +46,11 @@ def get_env_vars():
 def get_event_vars(event):
     # DMS erplication task id
     config.replication_task_id = ""
-    dms_event_str = event['Records'][0]['Sns']['Message']
-    print("[DEBUG] get_event_vars: DMS event string = %s" % dms_event_str)
-    dms_event = json.loads(dms_event_str)
-    print("[DEBUG] get_event_vars: DMS event = %s" % dms_event)
-    config.replication_task_id = dms_event['SourceId']
+    dms_event_message_str = event['Records'][0]['Sns']['Message']
+    print("[DEBUG] get_event_vars: DMS event message string = %s" % dms_event_message_str)
+    dms_event_message = json.loads(dms_event_message_str)
+    print("[DEBUG] get_event_vars: DMS event message = %s" % dms_event_message)
+    config.replication_task_id = dms_event_message['SourceId']
     
     # initialize DMS replication task ARN
     config.replication_task_arn = ""
@@ -62,7 +62,7 @@ def get_event_vars(event):
     
     return True
     
-
+    
 def prepend_column(column_header, column_value, data):
     for i, d in enumerate(data):
         data[i] = {column_header: column_value, **d}
@@ -77,21 +77,21 @@ def lambda_handler(event, context):
     
     # get environment variables
     if get_env_vars() == False:
-        print("dms-replication-task-event: get_env_vars() failed.")
+        print("dms-task-table-stats: get_env_vars() failed.")
         return False
         
     # get event variables
     if get_event_vars(event) == False:
-        print("dms-replication-task-event: get_event_vars() failed.")
+        print("dms-task-table-stats: get_event_vars() failed.")
         return False
         
     # check if replication task status is now stopped
     task_status = dms_util.get_task_status(config.replication_task_id)
     if task_status == 'stopped':
         # get table stats
-        print("dms-replication-task-event: Task %s is stopped. Getting table stats ..." % (config.replication_task_arn))
+        print("dms-task-table-stats: Task %s is stopped. Getting table stats ..." % (config.replication_task_arn))
         table_stats = dms_util.get_table_stats(config.replication_task_arn)
-        print("dms-replication-task-event: Printing table stats for task %s ..." % (config.replication_task_arn))
+        print("dms-task-table-stats: Printing table stats for task %s ..." % (config.replication_task_arn))
         print("==")
         print("table_stats")
         print("==")
@@ -120,7 +120,7 @@ def lambda_handler(event, context):
         timestamp = now.strftime("%Y%m%d-%H%M%S")
         dest_object_name = timestamp+".csv"
         
-        print("dms-replication-task-event: Writing and uploading table stats as:")
+        print("dms-task-table-stats: Writing and uploading table stats as:")
         print("dest_bucket_name: %s" % (config.dest_bucket_name))
         print("dest_object_prefix: %s" % (dest_object_prefix))
         print("dest_object_name: %s" % (dest_object_name))
@@ -131,7 +131,7 @@ def lambda_handler(event, context):
         # upload csv file to dest bucket
         csv_util.put_csv_file_as_s3_object(config.dest_bucket_name, dest_object_prefix, dest_object_name)
     else:
-        print("dms-replication-task-event: Task %s is %s." % (config.replication_task_arn, task_status))
+        print("dms-task-table-stats: Task %s is %s." % (config.replication_task_arn, task_status))
 
     # end
     print('\n... Thaaat\'s all, Folks!')
@@ -142,14 +142,14 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-t", "--test-event", required=True, help="Test event.")
     args = vars(ap.parse_args())
-    print("dms-replication-task-event: args = %s" % (args))
+    print("dms-task-table-stats: args = %s" % (args))
 
     # load json file
     test_event_file_name = args['test_event']
     f = open(test_event_file_name)
     event = json.load(f)
     f.close()
-    print("dms-replication-task-event: test_event = %s" % (event))
+    print("dms-task-table-stats: test_event = %s" % (event))
 
     # create test context
     context = {}
