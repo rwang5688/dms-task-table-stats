@@ -29,7 +29,7 @@ def start_replication_task(start_task_arn, start_task_type):
         response = dms.start_replication_task(ReplicationTaskArn=start_task_arn, StartReplicationTaskType=start_task_type)
         print("[DEBUG] start_replication_task: response from start_replication_task = %s." % (response))
         
-        start_task_id = response['ReplicationTaskIdentifier']
+        start_task_id = response['ReplicationTask']['ReplicationTaskIdentifier']
         print("[DEBUG] start_replication_task: start_task_id = %s." % (start_task_id))
 
     except ClientError as e:

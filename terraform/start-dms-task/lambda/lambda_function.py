@@ -81,7 +81,7 @@ def lambda_handler(event, context):
         
     now = datetime.now()
     timestamp = now.strftime("%Y%m%d-%H%M%S")
-    print("start-dms-task: Current time is: %s." % (timestamp))
+    print("start-dms-task: Current UTC (Universal Time Coordinated) Time is: %s." % (timestamp))
     
     # end
     print('\n... Thaaat\'s all, Folks!')
