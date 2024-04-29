@@ -91,9 +91,9 @@ resource "aws_lambda_function" "lambda" {
     variables = {
       DEST_BUCKET_NAME = "dms-task-table-stats-453874272819-us-west-2"
       REGION_NAME = "${var.aws_region}"
-      START_TASK_ARN = "arn:aws:dms:us-west-2:453874272819:task:ZAYVJYVWBRB6FN477C66277TPU"
       # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dms/client/start_replication_task.html 
       # StartReplicationTaskType='start-replication'|'resume-processing'|'reload-target'
+      START_TASK_ARN = "arn:aws:dms:us-west-2:453874272819:task:ZAYVJYVWBRB6FN477C66277TPU"
       START_TASK_TYPE = "reload-target" # restart task
     }
   }

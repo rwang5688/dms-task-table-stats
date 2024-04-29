@@ -6,10 +6,10 @@ module "lambda_python" {
 
   pip_path          = "pip"
 
-  lambda_name       = "dms-task-table-stats"
-  lambda_iam_name   = "dms-task-table-stats-iam"
+  lambda_name       = "get-dms-task-table-stats"
+  lambda_iam_name   = "get-dms-task-table-stats-iam"
 
-#  lambda_api_name   = "dms-task-table-stats-api"
+#  lambda_api_name   = "get-dms-task-table-stats-api"
 #  api_stage_name    = "dev"
 #  api_resource_path = "demo"
 #  api_http_method   = "POST"
