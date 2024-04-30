@@ -1,5 +1,4 @@
 import argparse
-from datetime import date
 from datetime import datetime
 import json
 import logging
@@ -63,11 +62,11 @@ def get_event_vars(event):
     return True
     
     
-def prepend_column(column_header, column_value, data):
-    for i, d in enumerate(data):
-        data[i] = {column_header: column_value, **d}
+def prepend_column_to_table(column_header, column_value, table):
+    for i, t in enumerate(table):
+        table[i] = {column_header: column_value, **t}
         
-    return data
+    return table
 
 
 def lambda_handler(event, context):
@@ -100,10 +99,10 @@ def lambda_handler(event, context):
     
         # prepend task_id to table_stats table
         task_id = config.replication_task_id
-        table_stats_ext = prepend_column("TaskId", task_id, table_stats)
-        #table_stats_ext = prepend_column("TableOwner", "db", table_stats_ext)
-        #table_stats_ext = prepend_column("Table", "dms_task_table_stats", table_stats_ext)
-        #table_stats_ext = prepend_column("Operation", "INSERT", table_stats_ext)
+        table_stats_ext = prepend_column_to_table("TaskId", task_id, table_stats)
+        #table_stats_ext = prepend_column_to_table("TableOwner", "db", table_stats_ext)
+        #table_stats_ext = prepend_column_to_table("Table", "dms_task_table_stats", table_stats_ext)
+        #table_stats_ext = prepend_column_to_table("Operation", "INSERT", table_stats_ext)
         print("==")
         print("table_stats_ext")
         print("==")
@@ -111,8 +110,6 @@ def lambda_handler(event, context):
         print("==")
         
         # set dest_object_prefix and dest_object_name
-        #today = date.today()
-        #dest_object_prefix = "date="+str(today)+"/"
         #dest_object_prefix = "db/dms_task_table_stats/cdc/"
         dest_object_prefix = "db/dms_task_table_stats/"
         
@@ -126,12 +123,40 @@ def lambda_handler(event, context):
         print("dest_object_name: %s" % (dest_object_name))
         
         # write csv file
-        csv_util.write_csv_file(table_stats, dest_object_name, write_header=False)
+        csv_util.write_table_to_csv_file(table_stats, dest_object_name, write_header=False)
         
         # upload csv file to dest bucket
         csv_util.put_csv_file_as_s3_object(config.dest_bucket_name, dest_object_prefix, dest_object_name)
     else:
         print("get-dms-task-table-stats: Task %s is %s." % (config.replication_task_arn, task_status))
+        
+        # populate dummy_table
+        dummy_row_1 = { "Column1": 1, "Column2": 2, "Column3": 3}
+        dummy_row_2 = { "Column1": 4, "Column2": 5, "Column3": 6}
+        dummy_row_3 = { "Column1": 7, "Column2": 8, "Column3": 9}
+        dummy_table = []
+        dummy_table.append(dummy_row_1)
+        dummy_table.append(dummy_row_2)
+        dummy_table.append(dummy_row_3)
+        print("==")
+        print("dummy_table")
+        print("==")
+        print(dummy_table)
+        print("==")
+        
+        # specify where to upload dummy_table csv file
+        dest_object_prefix = ""
+        dest_object_name = "dummy_table.csv"
+        print("get-dms-task-table-stats: Writing and uploading dummy table as:")
+        print("dest_bucket_name: %s" % (config.dest_bucket_name))
+        print("dest_object_prefix: %s" % (dest_object_prefix))
+        print("dest_object_name: %s" % (dest_object_name))
+        
+        # write csv file
+        csv_util.write_table_to_csv_file(dummy_table, dest_object_name, write_header=True)
+        
+        # upload csv file to dest bucket
+        csv_util.put_csv_file_as_s3_object(config.dest_bucket_name, dest_object_prefix, dest_object_name)
 
     # end
     print('\n... Thaaat\'s all, Folks!')

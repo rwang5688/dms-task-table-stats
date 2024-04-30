@@ -17,15 +17,15 @@ def get_s3_client():
     return s3
     
     
-def write_csv_file(table_stats, dest_object_name, write_header=True):
+def write_table_to_csv_file(table, dest_object_name, write_header=True):
     # extract field names from first entry in table stats
-    field_names = list(table_stats[0].keys())
+    field_names = list(table[0].keys())
     tmp_dest_object_name = '/tmp/'+dest_object_name
     with open(tmp_dest_object_name, 'w') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=field_names)
         if write_header:
             writer.writeheader()
-        writer.writerows(table_stats)
+        writer.writerows(table)
         csv_file.close()
         
         
