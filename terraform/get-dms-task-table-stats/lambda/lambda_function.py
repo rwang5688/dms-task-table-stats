@@ -123,7 +123,7 @@ def lambda_handler(event, context):
         print("dest_object_name: %s" % (dest_object_name))
         
         # write csv file
-        csv_util.write_table_to_csv_file(table_stats, dest_object_name, write_header=False)
+        csv_util.write_table_to_csv_file(table_stats, dest_object_name, write_header=True)
         
         # upload csv file to dest bucket
         csv_util.put_csv_file_as_s3_object(config.dest_bucket_name, dest_object_prefix, dest_object_name)
