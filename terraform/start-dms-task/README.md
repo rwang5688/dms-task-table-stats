@@ -6,9 +6,9 @@ Configuration in this directory deploys simple python script to AWS Lambda. Scri
 
 To run this example you need to execute:
 ```bash
-$ terraform init
-$ terraform plan -out=start-dms-task.tfplan
-$ terraform apply -auto-approve start-dms-task.tfplan
+terraform init
+terraform plan -out=start-dms-task.tfplan
+terraform apply -auto-approve start-dms-task.tfplan
 ```
 
 Note that this configuration might create resources which cost money. Run `terraform destroy` when you don't need these resources anymore.
