@@ -1,4 +1,4 @@
-# mip-dcm-to-png Python Lambda function
+# start-dms-task Python Lambda function
 
 Configuration in this directory deploys simple python script to AWS Lambda. Script writes all requests into cloudwatch logs.
 
@@ -7,8 +7,8 @@ Configuration in this directory deploys simple python script to AWS Lambda. Scri
 To run this example you need to execute:
 ```bash
 $ terraform init
-$ terraform plan -out=mip-dcm-to-png.tfplan
-$ terraform apply -auto-approve mip-dcm-to-png.tfplan
+$ terraform plan -out=start-dms-task.tfplan
+$ terraform apply -auto-approve start-dms-task.tfplan
 ```
 
 Note that this configuration might create resources which cost money. Run `terraform destroy` when you don't need these resources anymore.
